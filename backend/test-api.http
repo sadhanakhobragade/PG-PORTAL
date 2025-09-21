@@ -1,0 +1,120 @@
+### --------------------
+### AUTH ROUTES
+### --------------------
+
+### Register Owner
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Owner Two",
+  "email": "owner2@example.com",
+  "password": "password123",
+  "role": "owner"
+}
+
+### Register Tenant
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Tenant Two",
+  "email": "tenant2@example.com",
+  "password": "password123",
+  "role": "tenant"
+}
+
+### Login Owner
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "owner1@example.com",
+  "password": "password123"
+}
+
+### Login Tenant
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "tenant1@example.com",
+  "password": "password123"
+}
+
+---
+
+### --------------------
+### PG ROUTES (Owner only)
+### --------------------
+
+### Create PG
+POST http://localhost:5000/api/pgs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+{
+  "title": "PG Residency",
+  "address": "123 Street, City",
+  "description": "Comfortable PG near college"
+}
+
+### Get all PGs
+GET http://localhost:5000/api/pgs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+---
+
+### --------------------
+### ROOM ROUTES (Owner only)
+### --------------------
+
+### Create Room in PG
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+{
+  "pgId": "68c7a2a74eb31ba3e556cf25",
+  "name": "Room 101",
+  "type": "2-seater",
+  "totalBeds": 2,
+  "rentPerBed": 5000,
+  "images": []
+}
+
+### Get Rooms of a PG
+GET http://localhost:5000/api/rooms?pg=68c7a2a74eb31ba3e556cf25
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+---
+
+### --------------------
+### BOOKING ROUTES
+### --------------------
+
+### Tenant books a room
+POST http://localhost:5000/api/bookings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdhMDFhNGViMzFiYTNlNTU2Y2YxZiIsInJvbGUiOiJ0ZW5hbnQiLCJpYXQiOjE3NTc5MTMxMTQsImV4cCI6MTc1ODUxNzkxNH0.VUjQP0xhs-1BzFASysZFWL_WyqTb0ERMclQ6z4LZ5m8
+
+{
+  "roomId": "68c7a2eb4eb31ba3e556cf29",
+  "rentDueDate": "2025-09-30"
+}
+
+### Tenant views own bookings
+GET http://localhost:5000/api/bookings/my
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdhMDFhNGViMzFiYTNlNTU2Y2YxZiIsInJvbGUiOiJ0ZW5hbnQiLCJpYXQiOjE3NTc5MTMxMTQsImV4cCI6MTc1ODUxNzkxNH0.VUjQP0xhs-1BzFASysZFWL_WyqTb0ERMclQ6z4LZ5m8
+
+### Owner views all bookings across their PGs
+GET http://localhost:5000/api/bookings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+### Owner views bookings for a specific PG
+GET http://localhost:5000/api/bookings/pg/68c7a2a74eb31ba3e556cf25
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc5ZjNhNGViMzFiYTNlNTU2Y2YxYiIsInJvbGUiOiJvd25lciIsImlhdCI6MTc1NzkxMjg5MCwiZXhwIjoxNzU4NTE3NjkwfQ.52aOQ4NOxspmp-rAGqQo9etPFm3ulnKlZ-mEeMwsqwk
+
+### Tenant or Owner cancels a booking
+DELETE http://localhost:5000/api/bookings/<booking_id_here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdhMDFhNGViMzFiYTNlNTU2Y2YxZiIsInJvbGUiOiJ0ZW5hbnQiLCJpYXQiOjE3NTc5MTMxMTQsImV4cCI6MTc1ODUxNzkxNH0.VUjQP0xhs-1BzFASysZFWL_WyqTb0ERMclQ6z4LZ5m8
